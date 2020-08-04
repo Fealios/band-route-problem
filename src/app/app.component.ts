@@ -44,33 +44,33 @@ export class AppComponent implements OnInit, AfterViewInit {
     nodeElement.classList.add('venue');
     nodeElement.id = `${node.id}`;
 
-    nodeElement.style.cssText = `left: ${node.x}px; top: ${node.y}px; position: relative; border: solid 1px blue; border-radius: 50%; width: 20px; height: 20px`;
+    nodeElement.style.cssText = `left: ${node.x}px; top: ${node.y}px;`;
     graph.appendChild(nodeElement);
   }
 
-  private findClosestNeighbors() {
-    // this method finds the pair that has the shortest distance to start things off
-    let hypotenuse = Number.MAX_SAFE_INTEGER;
-    const l = this.allNodes.length;
-    let shortestNeighbors = { a: Node = null, b: Node = null };
+  // private findClosestNeighbors() {
+  //   // this method finds the pair that has the shortest distance to start things off
+  //   let hypotenuse = Number.MAX_SAFE_INTEGER;
+  //   const l = this.allNodes.length;
+  //   let shortestNeighbors = { a: Node = null, b: Node = null };
 
-    for (let i = 0; i < l - 1; i++) {
-      const incremented = i + 1;
-      for (let j = incremented; j < l; j++) {
-        const newHypotenuse = this.pythagoreum(
-          this.allNodes[i],
-          this.allNodes[j]
-        );
-        if (newHypotenuse < hypotenuse) {
-          hypotenuse = newHypotenuse;
-          shortestNeighbors.a = this.allNodes[i];
-          shortestNeighbors.b = this.allNodes[j];
-        }
-      }
-    }
+  //   for (let i = 0; i < l - 1; i++) {
+  //     const incremented = i + 1;
+  //     for (let j = incremented; j < l; j++) {
+  //       const newHypotenuse = this.pythagoreum(
+  //         this.allNodes[i],
+  //         this.allNodes[j]
+  //       );
+  //       if (newHypotenuse < hypotenuse) {
+  //         hypotenuse = newHypotenuse;
+  //         shortestNeighbors.a = this.allNodes[i];
+  //         shortestNeighbors.b = this.allNodes[j];
+  //       }
+  //     }
+  //   }
 
-    return shortestNeighbors;
-  }
+  //   return shortestNeighbors;
+  // }
 
   private pythagoreum(node1: Node, node2: Node) {
     const x = Math.abs(node2.x - node1.x);

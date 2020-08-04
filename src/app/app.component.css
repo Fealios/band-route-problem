@@ -12,10 +12,10 @@
   height: 100%;
 }
 
-span .venue {
-  width: 2px;
-  height: 2px;
+::ng-deep span.venue {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background-color: blue;
+  border: solid 1px blue;
   position: relative;
 }
