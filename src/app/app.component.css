@@ -83,6 +83,7 @@ h1 {
 ::ng-deep span.end {
   border: solid 1px red !important;
   background-color: red !important;
+  color: #f5fffc !important;
   /* !important, because i'm not as cool of a developer as i think i am */
 }
 
