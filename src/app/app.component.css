@@ -1,14 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=New+Rocker&display=swap");
+
+/* being a little bit colorblind, i usually rely on the assistance of coworkers/designers
+when choosing colors, so appologies if this page is stylistically hideous */
+
+h1 {
+  /* wanted to give the page a Rock n Roll vibe with this title font */
+  font-family: "New Rocker", cursive;
+  text-align: center;
+  font-size: 50px;
+  font-style: italic;
+  color: #f5fffc;
+}
+
+#button-container {
+  width: 100%;
+  text-align: center;
+}
+
+#button-container button {
+  font-size: 20px;
+  border-radius: 4px;
+  padding: 8px;
+  border: none;
+  margin: 4px;
+  cursor: pointer;
+  background-color: rgb(45, 115, 189);
+  color: #f5fffc;
+}
+
+#button-container button:hover {
+  background-color: rgb(86, 145, 207);
+}
+
 #graph-container {
   width: Calc(100% - 42px);
-  height: 1200px;
-  background-color: #faf9f7;
-  border: solid 1px blue;
+  /* i love using the Calc method in display for this exact reason.  it's flexible, can be used
+  with multiple variable types, and is super helpful when you are lazy about how to size your page
+  while keeping it specific yet dynamic */
+  border: solid 0.5px grey;
+  height: 810px;
+  /* fixed height according to my data soft cap (see README) */
   padding: 20px;
+  background-color: #414144;
+  display: grid;
+  grid-template-columns: auto 1000px auto;
 }
 
 #graph-container #graph {
+  grid-column: 2/3;
   border: solid 1px grey;
-  width: 100%;
+  border-radius: 4px;
   height: 100%;
   position: relative;
   /* Using position relative to make child 'absolute' items, relative to the containing div.
@@ -16,18 +57,36 @@
 }
 
 ::ng-deep span.venue {
-  border-radius: 50%;
-  border: solid 1px blue;
+  /* i chose to keep the nodes extremely simple by just having them as a span.
+  had i felt like getting a third party CSS library, like bootstrap, or maybe
+  an icon library, i would have spiced it up a tad, and chose not to
+  display the venue ID at all, but for simplicity sake i kept it as is */
+  border: solid 2px rgb(108, 164, 224, 0.6);
+  color: #f5fffc;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  /* just felt like introducing some border opacity, because i havne't done that in a while
+  and wanted to. */
+  border-radius: 4px;
   position: absolute;
   margin: 0;
 }
 
 ::ng-deep span.start {
+  /* utilizing ng-deep because shadow dom is a thing (thank you Angular discord) 
+  and even though it was deprecated 5 years ago, there is still no other workaround
+  should you inject items into the DOM via typescript instead of via Angular */
   border: solid 1px green;
   background: green;
 }
 
 ::ng-deep span.end {
-  border: solid 1px red;
-  background-color: red;
+  border: solid 1px red !important;
+  background-color: red !important;
+  /* !important, because i'm not as cool of a developer as i think i am */
+}
+
+::ng-deep span.visited {
+  background-color: pink;
+  color: #28282a;
 }

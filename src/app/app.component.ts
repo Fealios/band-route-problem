@@ -8,23 +8,32 @@ import { Node } from './models/node';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  public allNodes: Node[]; // hold all nodes in unmodified state
+  public allNodes: Node[]; // hold all nodes.
   public routeLength: number = 0;
+  public loading = false;
 
   constructor(private svcData: DataService) {}
 
   ngOnInit() {
-    this.svcData.getData().subscribe(
+    this.load(40);
+    // load the smaller data set by default.
+  }
+
+  public load(count: number): void {
+    this.loading = true;
+    const graph = document.getElementById('graph');
+    graph.innerHTML = '';
+    this.svcData.getData(count).subscribe(
       (nodes) => {
         this.allNodes = nodes.map((node, index) => {
-          // map all the data given and turn them into Node objects, with IDs and visited boolean
+          // map all the data given and turn them into Node objects, with IDs and visited boolean.
           node.id = index;
           node.visited = false;
           this.displayNode(node);
           return node;
         });
 
-        const start = this.findRootNode2();
+        const start = this.findRootNode();
         this.highlightNode(start, 'start');
         this.routeLength = this.traverseFromRoot(start);
       },
@@ -38,6 +47,8 @@ export class AppComponent implements OnInit {
   }
 
   private displayNode(node: Node): void {
+    // inject the venues into the dom, set their html id to their node id,
+    // and give everyone their venue class.
     const graph = document.getElementById('graph');
     const nodeElement = document.createElement('span');
     nodeElement.innerText = `${node.id}`;
@@ -48,7 +59,8 @@ export class AppComponent implements OnInit {
     graph.appendChild(nodeElement);
   }
 
-  private findRootNode2(): Node {
+  private findRootNode(): Node {
+    // grab the node closest to 0,0 on the grid.
     let minDistance = Number.MAX_SAFE_INTEGER;
     const graphRoot: Node = { x: 0, y: 0, id: null, visited: false };
     let current = null;
@@ -60,23 +72,6 @@ export class AppComponent implements OnInit {
       }
     }
 
-    return current;
-  }
-
-  private findRootNode(root: Node = null): Node {
-    // find the node closest to 0,0 to traverse from.
-    let current: Node = root;
-    let end = true;
-    for (const node of this.allNodes) {
-      if (node.x < root.x && node.y < root.y) {
-        current = node;
-        end = false;
-      }
-    }
-
-    if (end) {
-      return current;
-    }
     return current;
   }
 
@@ -111,21 +106,23 @@ export class AppComponent implements OnInit {
     }
 
     if (end) {
-      // i wanted this to be a turnary statement, but i think because of the type safety
-      // the compiler wasn't accepting it, so here we are.
       this.highlightNode(current, 'end');
+      this.loading = false;
       return routeLength;
       // if it's the end return the length of the routes
     } else {
       routeLength += minDistance;
       // the end of the loop has been reached, concat the current route length with smallest found.
-      return this.traverseFromRoot(current, routeLength);
+      setTimeout(() => {
+        this.highlightStep(current);
+        return this.traverseFromRoot(current, routeLength);
+      }, 50);
       // if it's not the end, recurse with current node, and current routeLenght
     }
   }
 
   private pythagoreum(node1: Node, node2: Node) {
-    // algebra mother f****r, do you speak it?
+    // algebra baby, do you speak it?
     const x = Math.abs(node2.x - node1.x);
     const y = Math.abs(node2.y - node1.y);
     return Math.hypot(x, y);
@@ -133,9 +130,13 @@ export class AppComponent implements OnInit {
   }
 
   private highlightNode(node: Node, position: 'start' | 'end'): void {
-    const element = document.getElementById(`${node.id}`);
-    position === 'start'
-      ? element.classList.add('start')
-      : element.classList.add('end');
+    // did some string literal typing here to show off that i can.
+    const el = document.getElementById(`${node.id}`);
+    position === 'start' ? el.classList.add('start') : el.classList.add('end');
+  }
+
+  private highlightStep(node: Node): void {
+    const el = document.getElementById(`${node.id}`);
+    el.classList.add('visited');
   }
 }

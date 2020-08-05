@@ -1,5 +1,10 @@
-<h1>Band Routes</h1>
+<h1>Band Routes!</h1>
 <h3>{{ routeLength }}</h3>
+<div id="button-container">
+  <button (click)="load(40)" [disabled]="loading">40 items</button>
+  <button (click)="load(200)" [disabled]="loading">200 items</button>
+  <button (click)="load(500)" [disabled]="loading">500 items</button>
+</div>
 
 <div id="graph-container">
   <div id="graph"></div>
