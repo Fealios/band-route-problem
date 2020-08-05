@@ -768,14 +768,10 @@ If you have questions on the challenge, please contact Jared Sartin: jared@leftf
 
 # Candidate Notes:
 
-### Fill in comments, external tool usage, and time tracking
-
-### Strategy
-
 My strategy for approaching this problem was to first consume the data as it stood, and modify it into my chosen object structure of a Node, using a typescript interface. The node object added some properties to help my brain start the process of generating the traversal algorithm needed, by giving each location a unique ID (based off of the index of its location in the original data set), and a visited boolean, which was set to false by default (obviously).
 
 Next I wanted to display this data in 2d fashion, and after noting that none of the index values surpassed 1000 in value, and never became negative, I decided to allow myself a mental soft cap of 0 < n < 1000, where n is either the x or y vertex. Using this information, I displayed each location as a small dot in a "graph" setup, where the display was relative to a 0,0 point in an x/y axis graph, and then the location was simply added on to said graph, where the verteces were modifier of a pixel count eg: {x:100, y:200} would display as 100px, and 200px. Assuming your monitor has at least a 1000px x 1000px display, this should display no problem (mobile users beware). Using the ID that was attached earlier, I created an algorithm that found the most optimal starting pair, and highlighted them in the DOM with CSS, and then proceeded to plug them into my traversal algorithm.
 
-I decided to approach this problem via the Hamiltonian solution, since these data points aren't exactly "graphs" in that they dont have assigned neighbors, but they are technically weighted, and are undirected. At the end of the algorithm, I display the total traversal length in the DOM, and highlight the final node visited.
+I decided to approach this problem via the Dijkstra strategy, which is to say choosing the least weighted path with each hop, which allowed me to maintain a low complexity.
 
 The biggest challenge of this entire project is for one, I have no experience working with Graphs, and no formal education considering graph theory. The second obstacle was that the data given isn't a traditional "graph" structure, in that there are no listed pairs/edges to just plug a standard algorithm into, and I had to think around how to identify each location.

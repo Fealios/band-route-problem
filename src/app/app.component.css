@@ -10,12 +10,24 @@
   border: solid 1px grey;
   width: 100%;
   height: 100%;
+  position: relative;
+  /* Using position relative to make child 'absolute' items, relative to the containing div.
+  This allows me to justify the items from 0,0 on the x/y axis */
 }
 
 ::ng-deep span.venue {
-  width: 20px;
-  height: 20px;
   border-radius: 50%;
   border: solid 1px blue;
-  position: relative;
+  position: absolute;
+  margin: 0;
+}
+
+::ng-deep span.start {
+  border: solid 1px green;
+  background: green;
+}
+
+::ng-deep span.end {
+  border: solid 1px red;
+  background-color: red;
 }
